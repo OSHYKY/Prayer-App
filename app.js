@@ -581,20 +581,34 @@ function renderBahaiPrayerOfTheDay() {
   const type = document.getElementById("bahaiPrayerType").value;
   const container = document.getElementById("bahaiPrayerText");
 
+  let prayer;
+
   if (type === "short") {
-    container.textContent = BAHAI_PRAYERS.short;
+    prayer = BAHAI_PRAYERS.short[0];
   }
 
   if (type === "medium") {
-    container.innerHTML = BAHAI_PRAYERS.medium
-      .map((p, i) => `<p><strong>Prayer ${i+1}:</strong> ${p}</p>`)
-      .join("");
+    prayer = BAHAI_PRAYERS.medium[0];
   }
 
   if (type === "long") {
-    container.textContent = BAHAI_PRAYERS.long;
+    prayer = BAHAI_PRAYERS.long[0];
   }
+
+  if (!prayer) {
+    container.textContent = "No prayer found.";
+    return;
+  }
+
+  container.innerHTML = `
+    <div>${prayer.text}</div>
+    <div style="text-align:right; font-weight:bold; margin-top:1rem;">
+      — ${prayer.author}
+    </div>
+  `;
 }
+
+
 
 
 
