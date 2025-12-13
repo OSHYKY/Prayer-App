@@ -10,17 +10,28 @@ const STORAGE_KEYS = {
 };
 
 const BAHAI_PRAYERS = {
-  short: ["I bear witness, O my God, that Thou hast created me to know Thee and to worship Thee."
-  "I testift, at this to my powerlessness and to Thy might, to my poverty and to Thy wealth."
-  "There is none other God but Thee, the Help in Peril, the Self-Subsisting."
-  "Bahá'u'lláh"], 
-  medium: [
-    "Medium Prayer – Part 1...",
-    "Medium Prayer – Part 2...",
-    "Medium Prayer – Part 3..."
+  short: [
+    {
+      text: ``,
+      author: "Bahá’u’lláh"
+    }
   ],
-  long: "Long Obligatory Prayer text goes here..."
+
+  medium: [
+    {
+      text: `<< INSERT MEDIUM OBLIGATORY PRAYER TEXT HERE >>`,
+      author: "Bahá’u’lláh"
+    }
+  ],
+
+  long: [
+    {
+      text: `<< INSERT LONG OBLIGATORY PRAYER TEXT HERE >>`,
+      author: "Bahá’u’lláh"
+    }
+  ]
 };
+
 
 const get = (k, fallback) => {
   try { return JSON.parse(localStorage.getItem(k)) ?? fallback; }
@@ -560,5 +571,6 @@ function renderBahaiPrayerOfTheDay() {
     container.textContent = BAHAI_PRAYERS.long;
   }
 }
+
 
 
