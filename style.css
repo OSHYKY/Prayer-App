@@ -244,12 +244,12 @@ select {
 
 .day.skip {
   background: #ffeb3b;
-  box-shadow: 0 0 6px #ffeb3b;
+
 }
 
 .day.miss {
   background: #f44336;
-  box-shadow: 0 0 6px #f44336;
+
 }
 
 /* Glow pulse when marking done */
@@ -275,4 +275,5 @@ select {
   font-size: 0.9rem;
   opacity: 0.8;
 }
+
 
