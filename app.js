@@ -788,43 +788,19 @@ function renderBahaiPrayerOfTheDay() {
   }
 }
 
-document.getElementById("enable-orientation").addEventListener("click", async () => {
-  if (typeof DeviceOrientationEvent !== "undefined" &&
-      typeof DeviceOrientationEvent.requestPermission === "function") {
-    
-    // iOS
-    const permission = await DeviceOrientationEvent.requestPermission();
-    if (permission === "granted") {
-      window.addEventListener("deviceorientation", handleOrientation);
-    }
-  } else {
-    // Android / Desktop
-    window.addEventListener("deviceorientationabsolute", handleOrientation);
-    window.addEventListener("deviceorientation", handleOrientation);
-  }
+// -----------------------------
+// QIBLIH COMPASS
+// -----------------------------
 
-function handleOrientation(event) {
-  let heading;
-
-  // iOS uses webkitCompassHeading
-  if (event.webkitCompassHeading !== undefined) {
-    heading = event.webkitCompassHeading;
-  } else {
-    // Android uses alpha (0–360)
-    heading = 360 - event.alpha;
-  }
-
-  // Calculate rotation needed to face Qiblih
-  const rotation = qiblihBearing - heading;
-
-  document.getElementById("compass-needle").style.transform =
-    `rotate(${rotation}deg)`;
-}
-
+// Kaaba coordinates
 const KAABA_LAT = 21.422487;
 const KAABA_LON = 39.826206;
 
+let qiblihBearing = 0; // updated after GPS loads
 
+// -----------------------------
+// 1. Get GPS location
+// -----------------------------
 navigator.geolocation.getCurrentPosition(success, error);
 
 function success(pos) {
@@ -832,12 +808,14 @@ function success(pos) {
   const userLon = pos.coords.longitude;
 
   qiblihBearing = calculateBearing(userLat, userLon, KAABA_LAT, KAABA_LON);
+  console.log("Qiblih bearing:", qiblihBearing);
 }
 
 function error(err) {
   console.error("GPS error:", err);
 }
 
+// Bearing calculation
 function calculateBearing(lat1, lon1, lat2, lon2) {
   const φ1 = lat1 * Math.PI / 180;
   const φ2 = lat2 * Math.PI / 180;
@@ -848,13 +826,48 @@ function calculateBearing(lat1, lon1, lat2, lon2) {
             Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
 
   const θ = Math.atan2(y, x);
-  return (θ * 180 / Math.PI + 360) % 360; // convert to degrees
+  return (θ * 180 / Math.PI + 360) % 360;
 }
 
-let qiblihBearing = 0; // updated after GPS loads
-const rotation = qiblihBearing - heading;
+// -----------------------------
+// 2. Orientation permission + listeners
+// -----------------------------
+document.getElementById("enable-orientation").addEventListener("click", async () => {
 
-});
+  if (typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function") {
 
+    // iOS
+    const permission = await DeviceOrientationEvent.requestPermission();
+    if (permission === "granted") {
+      window.addEventListener("deviceorientation", handleOrientation);
+    }
+
+  } else {
+    // Android / Desktop
+    window.addEventListener("deviceorientationabsolute", handleOrientation);
+    window.addEventListener("deviceorientation", handleOrientation);
+  }
+
+}); // ✅ THIS closes the click handler properly
+
+// -----------------------------
+// 3. Handle orientation updates
+// -----------------------------
+function handleOrientation(event) {
+  let heading;
+
+  if (event.webkitCompassHeading !== undefined) {
+    heading = event.webkitCompassHeading; // iOS
+  } else {
+    heading = 360 - event.alpha; // Android
+  }
+
+  const rotation = qiblihBearing - heading;
+
+  document.getElementById("compass-needle").style.transform =
+    `rotate(${rotation}deg)`;
+}
+:})
 
 
