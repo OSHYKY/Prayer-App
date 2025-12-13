@@ -1,0 +1,209 @@
+:root {
+  --bg: #0f1420;
+  --text: #e9eefc;
+  --card: #151b2c;
+  --border: #243052;
+  --accent: #7ba7ff;
+  --accent-2: #9ad0ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  margin: 0;
+}
+
+header, footer {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 0 16px;
+  opacity: 0.95;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto 48px;
+  padding: 0 16px;
+  display: grid;
+  gap: 20px;
+}
+
+section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.reminder-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+button {
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  background: #11182b;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+button:hover { transform: translateY(-1px); opacity: 0.95; }
+button.primary {
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #06122a;
+  font-weight: 600;
+}
+
+.prayer-selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.add-prayer textarea {
+  width: 100%;
+  min-height: 100px;
+  margin-top: 8px;
+}
+
+.prayer-text {
+  margin-top: 10px;
+  padding: 12px;
+  background: #11182b;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  font-style: italic;
+}
+.prayer-text:empty { display: none; }
+
+.streak-counter {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  margin-top: 12px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.calendar .day {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #0f1526;
+}
+.calendar .day.done { background: #79ffa8; }
+.calendar .day.skip { background: #ffd27a; }
+.calendar .day.miss { background: #ff7b7b; }
+
+@media (max-width: 600px) {
+  .prayer-selects { grid-template-columns: 1fr; }
+}
+
+input[type="text"],
+input[type="time"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #11182b;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(123, 167, 255, 0.4);
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+select {
+  appearance: none;
+  background-image: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px;
+}
+
+.main-nav { display:flex; gap:8px; margin:12px 0; }
+.nav-btn { padding:8px 12px; border-radius:8px; background:#0f1724; color:var(--text); border:1px solid var(--border); }
+.nav-btn.active { background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#041226; }
+.page.hidden { display:none; }
+
+.bahai-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+#bahaiSchedule {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+#bahaiSchedule button { grid-column: 1 / -1; }
+
+#sunCanvas {
+  margin-top: 16px;
+  background: #0f1526;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.sun-times {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.bahai-prayer-select {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bahai-prayer-display {
+  margin-top: 12px;
+  padding: 12px;
+  background: #11182b;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+}

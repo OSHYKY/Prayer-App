@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7ba7ff" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Prayer Reminder</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- SunCalc for sunrise/sunset + sun position -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Prayer Reminder</h1>
+    <p>Stay consistent with morning and evening prayer.</p>
+
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+      <button data-page="home" class="nav-btn active">Home</button>
+      <button data-page="bahai" class="nav-btn">Bahá’í</button>
+      <button data-page="other" class="nav-btn">Other</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home page -->
+    <div id="page-home" class="page">
+      <section class="streak">
+        <h2>Current streak</h2>
+        <div class="streak-counter" id="streakCounter">0 days</div>
+        <div class="calendar" id="calendar"></div>
+      </section>
+
+      <section class="today">
+        <h2>Today</h2>
+
+        <div class="reminder-card">
+          <div>
+            <strong>Morning:</strong> <span id="morningTimeLabel">07:00</span>
+          </div>
+          <div class="actions">
+            <button id="markMorningDone">Mark Morning Done</button>
+            <button id="markMorningSkip" class="secondary">Skip</button>
+          </div>
+          <div class="status" id="morningStatus" aria-live="polite">Not completed</div>
+          <div id="morningPrayerText" class="prayer-text" aria-live="polite"></div>
+        </div>
+
+        <div class="reminder-card">
+          <div>
+            <strong>Evening:</strong> <span id="eveningTimeLabel">20:00</span>
+          </div>
+          <div class="actions">
+            <button id="markEveningDone">Mark Evening Done</button>
+            <button id="markEveningSkip" class="secondary">Skip</button>
+          </div>
+          <div class="status" id="eveningStatus" aria-live="polite">Not completed</div>
+          <div id="eveningPrayerText" class="prayer-text" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="prayer">
+        <h2>Prayer library</h2>
+        <div class="prayer-selects">
+          <div class="prayer-select">
+            <label for="morningPrayerSelect"><strong>Morning prayer</strong></label>
+            <select id="morningPrayerSelect" aria-label="Select morning prayer"></select>
+          </div>
+          <div class="prayer-select">
+            <label for="eveningPrayerSelect"><strong>Evening prayer</strong></label>
+            <select id="eveningPrayerSelect" aria-label="Select evening prayer"></select>
+          </div>
+        </div>
+
+        <div class="add-prayer">
+          <h3>Add a custom prayer</h3>
+          <label for="newPrayerTitle"><strong>Title</strong></label>
+          <input id="newPrayerTitle" type="text" placeholder="Prayer title" />
+          <label for="newPrayerText"><strong>Text</strong></label>
+          <textarea id="newPrayerText" placeholder="Prayer text"></textarea>
+          <div class="actions">
+            <button id="addPrayerBtn">Add prayer</button>
+            <button id="editPrayerBtn" class="secondary">Edit selected prayer</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings">
+        <h2>Settings</h2>
+        <div class="setting-row">
+          <label for="morningTime"><strong>Morning time</strong></label>
+          <input id="morningTime" type="time" value="07:00" />
+        </div>
+        <div class="setting-row">
+          <label for="eveningTime"><strong>Evening time</strong></label>
+          <input id="eveningTime" type="time" value="20:00" />
+        </div>
+        <div class="setting-row">
+          <label for="notificationStyle"><strong>Notification style</strong></label>
+          <select id="notificationStyle">
+            <option value="gentle">Gentle</option>
+            <option value="vibration">Vibration</option>
+            <option value="silent">Silent</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button id="saveSettingsBtn">Save settings</button>
+          <button id="enableNotificationsBtn" class="primary">Enable notifications</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Bahá’í page -->
+    <div id="page-bahai" class="page hidden">
+      <section class="bahai">
+        <h2>Bahá’í Fast Mode</h2>
+        <div class="bahai-options">
+          <label><input type="radio" name="bahaiType" value="short" checked> Short prayer 1x</label>
+          <label><input type="radio" name="bahaiType" value="medium"> Medium prayer 3×</label>
+          <label><input type="radio" name="bahaiType" value="long"> Long prayer 1x</label>
+        </div>
+	<h3>Daily Bahá’í Prayer</h3>
+
+	<div class="bahai-prayer-select">
+	  <label for="bahaiPrayerType"><strong>Select prayer type</strong></label>
+	  <select id="bahaiPrayerType">
+		<option value="short">Short Prayer</option>
+		<option value="medium">Medium Prayer</option>
+		<option value="long">Long Prayer</option>
+	  </select>
+	</div>
+
+<div class="bahai-prayer-display">
+  <h4>Today's Prayer</h4>
+  <div id="bahaiPrayerText" class="prayer-text"></div>
+</div>
+
+        <div id="bahaiSchedule">
+          <label>Fast start date <input id="fastStart" type="date"></label>
+          <label>Days <input id="fastDays" type="number" min="1" value="19"></label>
+          <label>Anchor
+            <select id="fastAnchor">
+              <option value="sunrise">Sunrise</option>
+              <option value="sunset">Sunset</option>
+            </select>
+          </label>
+          <button id="startFastBtn">Start fast schedule</button>
+        </div>
+
+        <div id="bahaiToday" class="prayer-text" aria-live="polite"></div>
+
+        <h3>Sun path today</h3>
+        <canvas id="sunCanvas" width="320" height="160" aria-label="Sun position canvas"></canvas>
+        <div class="sun-times" id="sunTimes"></div>
+      </section>
+    </div>
+
+    <!-- Other page -->
+    <div id="page-other" class="page hidden">
+      <section>
+        <h2>Other</h2>
+        <p>More modes coming soon.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <small>Installable PWA. Notifications are local to your device.</small>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
