@@ -638,6 +638,18 @@ function renderBahaiPrayerOfTheDay() {
       — ${prayer.author}
     </div>
   `;
+
+  container.classList.remove("fade-in");
+  // Force reflow for animation restart
+  // eslint-disable-next-line no-unused-expressions
+  container.offsetHeight;
+  container.classList.add("fade-in");
+
+  if (bahaiReadingModeCheckbox?.checked) {
+    container.classList.add("reading-mode");
+  } else {
+    container.classList.remove("reading-mode");
+  }
 }
 
 
