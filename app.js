@@ -118,6 +118,17 @@ const fastAnchorSelect = document.getElementById("fastAnchor");
 const bahaiTodayDiv = document.getElementById("bahaiToday");
 const sunCanvas = document.getElementById("sunCanvas");
 const sunTimesDiv = document.getElementById("sunTimes");
+const bahaiReadingModeCheckbox = document.getElementById("bahaiReadingMode");
+const copyBahaiPrayerBtn = document.getElementById("copyBahaiPrayerBtn");
+const shareBahaiPrayerBtn = document.getElementById("shareBahaiPrayerBtn");
+const randomBahaiPrayerBtn = document.getElementById("randomBahaiPrayerBtn");
+const enableBahaiRemindersCheckbox = document.getElementById("enableBahaiReminders");
+const fastCountdownText = document.getElementById("fastCountdownText");
+const qiblihIndicator = document.getElementById("qiblihIndicator");
+const qiblihStatus = document.getElementById("qiblihStatus");
+const sunProgressFill = document.getElementById("sunProgressFill");
+const sunProgressLabel = document.getElementById("sunProgressLabel");
+
 
 // ===== Utilities =====
 const todayStr = () => {
@@ -628,6 +639,7 @@ function renderBahaiPrayerOfTheDay() {
     </div>
   `;
 }
+
 
 
 
