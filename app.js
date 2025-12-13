@@ -416,16 +416,18 @@ function bindEvents() {
     set(STORAGE_KEYS.settings, settings);
     showUpcomingPrayer();
   });
+
   eveningPrayerSelect.addEventListener("change", () => {
     settings.eveningPrayerId = eveningPrayerSelect.value;
     set(STORAGE_KEYS.settings, settings);
     showUpcomingPrayer();
   });
-// Bahá’í daily prayer selector
-const bahaiPrayerType = document.getElementById("bahaiPrayerType");
-if (bahaiPrayerType) {
-  bahaiPrayerType.addEventListener("change", renderBahaiPrayerOfTheDay);
-}
+
+  // Bahá’í daily prayer selector
+  const bahaiPrayerType = document.getElementById("bahaiPrayerType");
+  if (bahaiPrayerType) {
+    bahaiPrayerType.addEventListener("change", renderBahaiPrayerOfTheDay);
+  }
 
   // Add prayer
   addPrayerBtn.addEventListener("click", () => {
@@ -606,6 +608,7 @@ function renderBahaiPrayerOfTheDay() {
     </div>
   `;
 }
+
 
 
 
