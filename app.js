@@ -868,6 +868,12 @@ function handleOrientation(event) {
   document.getElementById("compass-needle").style.transform =
     `rotate(${rotation}deg)`;
 }
+
+window.addEventListener("load", () => {
+  initSunPath();
+});
+
 :})
+
 
 
