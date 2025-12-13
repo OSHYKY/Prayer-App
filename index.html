@@ -119,47 +119,89 @@
 
     <!-- Bahá’í page -->
     <div id="page-bahai" class="page hidden">
-      <section class="bahai">
-        <h2>Bahá’í Fast Mode</h2>
-        <div class="bahai-options">
-          <label><input type="radio" name="bahaiType" value="short" checked> Short prayer 1x</label>
-          <label><input type="radio" name="bahaiType" value="medium"> Medium prayer 3×</label>
-          <label><input type="radio" name="bahaiType" value="long"> Long prayer 1x</label>
-        </div>
-	<h3>Daily Bahá’í Prayer</h3>
+     <section class="bahai">
+  <h2>Bahá’í Fast Mode</h2>
 
-	<div class="bahai-prayer-select">
-	  <label for="bahaiPrayerType"><strong>Select prayer type</strong></label>
-	  <select id="bahaiPrayerType">
-		<option value="short">Short Prayer</option>
-		<option value="medium">Medium Prayer</option>
-		<option value="long">Long Prayer</option>
-	  </select>
-	</div>
+  <div class="bahai-options">
+    <label><input type="radio" name="bahaiType" value="short" checked> Short prayer 1x</label>
+    <label><input type="radio" name="bahaiType" value="medium"> Medium prayer 3×</label>
+    <label><input type="radio" name="bahaiType" value="long"> Long prayer 1x</label>
+  </div>
 
-<div class="bahai-prayer-display">
-  <h4>Today's Prayer</h4>
-  <div id="bahaiPrayerText" class="prayer-text"></div>
-</div>
+  <div class="bahai-fast-meta">
+    <div id="fastCountdownText"></div>
+    <div id="bahaiReminderSettings">
+      <label>
+        <input type="checkbox" id="enableBahaiReminders">
+        Enable Bahá’í prayer reminders
+      </label>
+    </div>
+  </div>
 
-        <div id="bahaiSchedule">
-          <label>Fast start date <input id="fastStart" type="date"></label>
-          <label>Days <input id="fastDays" type="number" min="1" value="19"></label>
-          <label>Anchor
-            <select id="fastAnchor">
-              <option value="sunrise">Sunrise</option>
-              <option value="sunset">Sunset</option>
-            </select>
-          </label>
-          <button id="startFastBtn">Start fast schedule</button>
-        </div>
+  <h3>Daily Bahá’í Prayer</h3>
 
-        <div id="bahaiToday" class="prayer-text" aria-live="polite"></div>
+  <div class="bahai-prayer-toolbar">
+    <div class="bahai-prayer-select">
+      <label for="bahaiPrayerType"><strong>Select prayer type</strong></label>
+      <select id="bahaiPrayerType">
+        <option value="short">Short Prayer</option>
+        <option value="medium">Medium Prayer</option>
+        <option value="long">Long Prayer</option>
+      </select>
+    </div>
 
-        <h3>Sun path today</h3>
-        <canvas id="sunCanvas" width="320" height="160" aria-label="Sun position canvas"></canvas>
-        <div class="sun-times" id="sunTimes"></div>
-      </section>
+    <div class="bahai-reading-mode">
+      <label>
+        <input type="checkbox" id="bahaiReadingMode">
+        Reading mode
+      </label>
+    </div>
+  </div>
+
+  <div class="bahai-prayer-display">
+    <h4>Today's Prayer</h4>
+    <div id="bahaiPrayerText" class="prayer-text"></div>
+    <div class="bahai-prayer-actions">
+      <button id="copyBahaiPrayerBtn">Copy</button>
+      <button id="shareBahaiPrayerBtn">Share</button>
+      <button id="randomBahaiPrayerBtn" class="secondary">Prayer of the day</button>
+    </div>
+  </div>
+
+  <div class="qiblih-section">
+    <h3>Qiblih direction</h3>
+    <p id="qiblihStatus">Enable location and compass to show the Qiblih direction.</p>
+    <div id="qiblihIndicator" aria-label="Qiblih direction indicator"></div>
+  </div>
+
+  <div id="bahaiSchedule">
+    <h3>Fast schedule</h3>
+    <label>Fast start date <input id="fastStart" type="date"></label>
+    <label>Days <input id="fastDays" type="number" min="1" value="19"></label>
+    <label>Anchor
+      <select id="fastAnchor">
+        <option value="sunrise">Sunrise</option>
+        <option value="sunset">Sunset</option>
+      </select>
+    </label>
+    <button id="startFastBtn">Start fast schedule</button>
+  </div>
+
+  <div id="bahaiToday" class="prayer-text" aria-live="polite"></div>
+
+  <h3>Sun path today</h3>
+  <div class="sun-wrapper">
+    <canvas id="sunCanvas" width="320" height="160" aria-label="Sun position canvas"></canvas>
+    <div class="sun-times" id="sunTimes"></div>
+    <div class="sun-progress">
+      <div class="sun-progress-bar">
+        <div class="sun-progress-fill" id="sunProgressFill"></div>
+      </div>
+      <div class="sun-progress-label" id="sunProgressLabel"></div>
+    </div>
+  </div>
+</section>
+
     </div>
 
     <!-- Other page -->
@@ -178,6 +220,7 @@
   <script src="app.js" defer></script>
 </body>
 </html>
+
 
 
 
