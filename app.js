@@ -554,6 +554,7 @@ function markToday(statusKey) {
   if (statusKey === "done") {
     const last = streak.lastDate;
     const today = new Date(todayStr());
+
     if (!last) {
       streak.count = 1;
     } else {
@@ -562,13 +563,15 @@ function markToday(statusKey) {
       if (diffDays === 1) streak.count += 1;
       else if (diffDays > 1) streak.count = 1;
     }
+
     streak.lastDate = todayStr();
     set(STORAGE_KEYS.streak, streak);
   }
 
   renderStreak();
-  renderCalendar();
+  renderCalendar(); // triggers animations
 }
+
 
 // ===== Init =====
 async function init() {
@@ -630,6 +633,7 @@ function renderBahaiPrayerOfTheDay() {
     </div>
   `;
 }
+
 
 
 
