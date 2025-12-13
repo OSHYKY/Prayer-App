@@ -870,10 +870,5 @@ function handleOrientation(event) {
 }
 
 window.addEventListener("load", () => {
-  initSunPath();
-
-:})
-
-
-
-
+  initSunCanvas();
+});
