@@ -303,3 +303,105 @@ select {
   margin-top: 10px;
 }
 
+.bahai-fast-meta {
+  margin: 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.bahai-prayer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.bahai-reading-mode {
+  font-size: 0.9rem;
+}
+
+.bahai-prayer-display {
+  margin-top: 0.5rem;
+}
+
+.bahai-prayer-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.prayer-text.reading-mode {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.prayer-text.fade-in {
+  animation: bahaiFadeIn 0.25s ease-out;
+}
+
+@keyframes bahaiFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.qiblih-section {
+  margin-top: 1.25rem;
+}
+
+#qiblihIndicator {
+  margin-top: 0.5rem;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#qiblihIndicator::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 40%;
+  background: #ffb300;
+  transform-origin: bottom center;
+  bottom: 50%;
+}
+
+.sun-wrapper {
+  margin-top: 0.5rem;
+}
+
+.sun-progress {
+  margin-top: 0.5rem;
+}
+
+.sun-progress-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.15);
+  overflow: hidden;
+}
+
+.sun-progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #ffb74d, #ff7043);
+  transition: width 0.3s ease;
+}
+
+.sun-progress-label {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+
