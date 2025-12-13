@@ -177,7 +177,7 @@ function renderCalendar() {
 
   const now = new Date();
   const start = new Date(now);
-  start.setDate(now.getDate() - 13); // 14-day window
+  start.setDate(now.getDate() - 13); // oldest day on the left
 
   let doneCount = 0;
 
@@ -192,21 +192,16 @@ function renderCalendar() {
 
     const dot = document.createElement("div");
     dot.className = `day ${status}`;
-
-    // Add pulse animation for today's completion
-    if (key === todayStr() && status === "done") {
-      dot.classList.add("pulse");
-    }
+    dot.title = `${key}: ${status}`;
 
     calendarEl.appendChild(dot);
   }
 
-  // Update percentage label
-  const percent = Math.round((doneCount / 14) * 100);
-  document.getElementById("streakPercent").textContent =
-    `${doneCount}/14 days (${percent}%)`;
+  const streakPercent = document.getElementById("streakPercent");
+  if (streakPercent) {
+    streakPercent.textContent = `${doneCount} days done`;
+  }
 }
-
 
 
 // ===== Show prayer within ±1 hour =====
@@ -633,6 +628,7 @@ function renderBahaiPrayerOfTheDay() {
     </div>
   `;
 }
+
 
 
 
