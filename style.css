@@ -268,6 +268,7 @@ select {
 
 #calendar {
   display: flex;
+  flex-direction: row; /* FORCE left → right */
   gap: 6px;
   margin-top: 10px;
 }
@@ -275,26 +276,19 @@ select {
 .day {
   width: 14px;
   height: 14px;
-  border-radius: 3px; /* small rounding, not circles */
+  border-radius: 3px;
   background: rgba(255,255,255,0.2);
 }
 
+/* These MUST come after .day or they get overridden */
 .day.done {
-  background: #4caf50;
+  background: #4caf50 !important; /* green */
 }
 
 .day.skip {
-  background: #ffeb3b;
+  background: #ff9800 !important; /* orange */
 }
 
 .day.miss {
-  background: #f44336;
+  background: #f44336 !important; /* red */
 }
-
-#streakPercent {
-  margin-top: 6px;
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-
