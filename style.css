@@ -404,4 +404,11 @@ select {
   opacity: 0.85;
 }
 
+#compass-needle {
+  transition: transform 0.2s linear;
+  transform-origin: 50% 50%;
+}
+
+
+
 
