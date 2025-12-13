@@ -176,11 +176,10 @@ function renderCalendar() {
   calendarEl.innerHTML = "";
 
   const now = new Date();
-
-  // We want the streak to fill left → right,
-  // so we generate days from oldest → newest.
   const start = new Date(now);
   start.setDate(now.getDate() - 13); // 14-day window
+
+  let doneCount = 0;
 
   for (let i = 0; i < 14; i++) {
     const d = new Date(start);
@@ -189,13 +188,25 @@ function renderCalendar() {
     const key = d.toISOString().slice(0, 10);
     const status = calendarData[key] || "miss";
 
+    if (status === "done") doneCount++;
+
     const dot = document.createElement("div");
     dot.className = `day ${status}`;
-    dot.title = `${key}: ${status}`;
+
+    // Add pulse animation for today's completion
+    if (key === todayStr() && status === "done") {
+      dot.classList.add("pulse");
+    }
 
     calendarEl.appendChild(dot);
   }
+
+  // Update percentage label
+  const percent = Math.round((doneCount / 14) * 100);
+  document.getElementById("streakPercent").textContent =
+    `${doneCount}/14 days (${percent}%)`;
 }
+
 
 
 // ===== Show prayer within ±1 hour =====
@@ -619,6 +630,7 @@ function renderBahaiPrayerOfTheDay() {
     </div>
   `;
 }
+
 
 
 
