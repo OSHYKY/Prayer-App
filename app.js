@@ -457,15 +457,109 @@ function bindEvents() {
     bahaiPrayerType.addEventListener("change", renderBahaiPrayerOfTheDay);
   }
 
+  // Reading mode toggle
+  if (bahaiReadingModeCheckbox) {
+    bahaiReadingModeCheckbox.addEventListener("change", () => {
+      const container = document.getElementById("bahaiPrayerText");
+      if (!container) return;
+      if (bahaiReadingModeCheckbox.checked) {
+        container.classList.add("reading-mode");
+      } else {
+        container.classList.remove("reading-mode");
+      }
+    });
+  }
+
+  // Copy Bahá’í prayer
+  if (copyBahaiPrayerBtn) {
+    copyBahaiPrayerBtn.addEventListener("click", async () => {
+      const container = document.getElementById("bahaiPrayerText");
+      if (!container) return;
+      const text = container.innerText.trim();
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        console.warn("Clipboard write failed", e);
+      }
+    });
+  }
+
+  // Share Bahá’í prayer
+  if (shareBahaiPrayerBtn) {
+    shareBahaiPrayerBtn.addEventListener("click", async () => {
+      const container = document.getElementById("bahaiPrayerText");
+      if (!container) return;
+      const text = container.innerText.trim();
+      if (!text) return;
+
+      const shareData = {
+        title: "Bahá’í Prayer",
+        text
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (e) {
+          console.warn("Share cancelled or failed", e);
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (e) {
+          console.warn("Clipboard fallback failed", e);
+        }
+      }
+    });
+  }
+
+  // Random Bahá’í prayer (short/medium/long)
+  if (randomBahaiPrayerBtn) {
+    randomBahaiPrayerBtn.addEventListener("click", () => {
+      const types = ["short", "medium", "long"];
+      const randomType = types[Math.floor(Math.random() * types.length)];
+      if (bahaiPrayerType) {
+        bahaiPrayerType.value = randomType;
+      }
+      renderBahaiPrayerOfTheDay();
+    });
+  }
+
+  // Bahá’í reminders toggle
+  if (enableBahaiRemindersCheckbox) {
+    enableBahaiRemindersCheckbox.addEventListener("change", async () => {
+      fastConfig = fastConfig || get(STORAGE_KEYS.bahaiFast, null);
+      if (!fastConfig) {
+        bahaiTodayDiv.textContent = "Set your fast schedule first.";
+        enableBahaiRemindersCheckbox.checked = false;
+        return;
+      }
+
+      if (enableBahaiRemindersCheckbox.checked) {
+        await scheduleBahaiFast(fastConfig);
+        bahaiTodayDiv.textContent =
+          `Fast scheduled: ${fastConfig.days} days starting ${fastConfig.startDate} (${fastConfig.type}, ${fastConfig.anchor})`;
+      } else {
+        bahaiTodayDiv.textContent = "Bahá’í reminders disabled.";
+      }
+    });
+  }
+
   // Add prayer
   addPrayerBtn.addEventListener("click", () => {
     const title = newPrayerTitleEl.value.trim();
     const text = newPrayerTextEl.value.trim();
     if (!title || !text) return;
+
     const id = `p_${Date.now()}`;
     prayers.push({ id, title, text });
     set(STORAGE_KEYS.prayers, prayers);
-    if (!settings.morningPrayerId) settings.morningPrayerId = id;
+
+    if (!settings.morningPrayerId) {
+      settings.morningPrayerId = id;
+    }
+
     renderPrayers();
     newPrayerTitleEl.value = "";
     newPrayerTextEl.value = "";
@@ -477,23 +571,29 @@ function bindEvents() {
     const id = morningPrayerSelect.value || eveningPrayerSelect.value;
     const prayer = prayers.find(p => p.id === id);
     if (!prayer) return;
+
     newPrayerTitleEl.value = prayer.title;
     newPrayerTextEl.value = prayer.text;
     addPrayerBtn.textContent = "Save changes";
+
     const saveHandler = () => {
       const newTitle = newPrayerTitleEl.value.trim();
       const newText = newPrayerTextEl.value.trim();
       if (!newTitle || !newText) return;
+
       prayer.title = newTitle;
       prayer.text = newText;
       set(STORAGE_KEYS.prayers, prayers);
+
       renderPrayers();
       addPrayerBtn.textContent = "Add prayer";
       newPrayerTitleEl.value = "";
       newPrayerTextEl.value = "";
       showUpcomingPrayer();
+
       addPrayerBtn.removeEventListener("click", saveHandler);
     };
+
     addPrayerBtn.addEventListener("click", saveHandler, { once: true });
   });
 
@@ -502,6 +602,7 @@ function bindEvents() {
     settings.morningTime = morningTimeInput.value;
     settings.eveningTime = eveningTimeInput.value;
     settings.notificationStyle = notificationStyleSelect.value;
+
     set(STORAGE_KEYS.settings, settings);
     renderSettings();
     showUpcomingPrayer();
@@ -512,8 +613,11 @@ function bindEvents() {
   enableNotificationsBtn.addEventListener("click", async () => {
     const reg = await ensureSW();
     if (!reg) return;
+
     const res = await requestNotificationPermission();
-    if (res === "granted") scheduleAllNotifications();
+    if (res === "granted") {
+      scheduleAllNotifications();
+    }
   });
 
   // Mark actions
@@ -521,14 +625,17 @@ function bindEvents() {
     morningStatus.textContent = "Completed";
     markToday("done");
   });
+
   document.getElementById("markMorningSkip").addEventListener("click", () => {
     morningStatus.textContent = "Skipped";
     markToday("skip");
   });
+
   document.getElementById("markEveningDone").addEventListener("click", () => {
     eveningStatus.textContent = "Completed";
     markToday("done");
   });
+
   document.getElementById("markEveningSkip").addEventListener("click", () => {
     eveningStatus.textContent = "Skipped";
     markToday("skip");
@@ -546,10 +653,37 @@ function bindEvents() {
       set(STORAGE_KEYS.bahaiFast, fastConfig);
 
       await scheduleBahaiFast(fastConfig);
-      bahaiTodayDiv.textContent = `Fast scheduled: ${days} days starting ${startDate} (${type}, ${anchor})`;
+      updateFastCountdown();
+      bahaiTodayDiv.textContent =
+        `Fast scheduled: ${days} days starting ${startDate} (${type}, ${anchor})`;
     });
   }
 }
+
+function updateFastCountdown() {
+  if (!fastConfig || !fastConfig.startDate || !fastCountdownText) return;
+
+  const start = new Date(fastConfig.startDate);
+  const days = fastConfig.days || 19;
+  const end = new Date(start);
+  end.setDate(start.getDate() + days - 1);
+
+  const today = new Date(todayStr());
+
+  if (today < start) {
+    const diff = Math.round((start - today) / (1000 * 60 * 60 * 24));
+    fastCountdownText.textContent =
+      `Fast starts in ${diff} day${diff === 1 ? "" : "s"}.`;
+  } else if (today > end) {
+    fastCountdownText.textContent = "Fast has ended.";
+  } else {
+    const dayIndex = Math.round((today - start) / (1000 * 60 * 60 * 24)) + 1;
+    const remaining = days - dayIndex;
+    fastCountdownText.textContent =
+      `Day ${dayIndex} of ${days} (${remaining} day${remaining === 1 ? "" : "s"} remaining).`;
+  }
+}
+
 
 // ===== Actions: streak + calendar =====
 function markToday(statusKey) {
@@ -651,6 +785,7 @@ function renderBahaiPrayerOfTheDay() {
     container.classList.remove("reading-mode");
   }
 }
+
 
 
 
