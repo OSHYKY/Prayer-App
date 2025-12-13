@@ -802,5 +802,25 @@ document.getElementById("enable-orientation").addEventListener("click", async ()
     window.addEventListener("deviceorientationabsolute", handleOrientation);
     window.addEventListener("deviceorientation", handleOrientation);
   }
+
+function handleOrientation(event) {
+  let heading;
+
+  // iOS uses webkitCompassHeading
+  if (event.webkitCompassHeading !== undefined) {
+    heading = event.webkitCompassHeading;
+  } else {
+    // Android uses alpha (0–360)
+    heading = 360 - event.alpha;
+  }
+
+  // Calculate rotation needed to face Qiblih
+  const rotation = qiblihBearing - heading;
+
+  document.getElementById("compass-needle").style.transform =
+    `rotate(${rotation}deg)`;
+}
+	
 });
+
 
