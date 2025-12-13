@@ -292,3 +292,14 @@ select {
 .day.miss {
   background: #f44336 !important; /* red */
 }
+
+#calendar {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  direction: ltr !important;
+  unicode-bidi: plaintext !important;
+  gap: 6px;
+  margin-top: 10px;
+}
+
