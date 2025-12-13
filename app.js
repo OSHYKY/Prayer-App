@@ -12,7 +12,7 @@ const STORAGE_KEYS = {
 const BAHAI_PRAYERS = {
   short: [
     {
-      text: ``,
+      text: `<< INSERT SHORT OBLIGATORY PRAYER TEXT HERE >>`,
       author: "Bahá’u’lláh"
     }
   ],
@@ -45,8 +45,7 @@ const BAHAI_PRAYERS = {
 <p>Let him, then, be seated and say:</p>
 
 <p>Thou seest me, O my God, turned toward Thee. He Who hath turned unto Thee is he who hath recognized Thee, and he who hath recognized Thee hath turned unto Thee. I beseech Thee, by Thy Name through which Thou didst subdue all things, and didst decree that which is to befall them, to make me steadfast in Thy Cause, fulfilled Thy Covenant, and opened wide the door of Thy grace to all that dwell in heaven and on earth. Blessing and peace, salutation and glory, rest upon Thy loved ones, whom the changes and chances of the world have not deterred from turning unto Thee, and who have given their all, in the hope of obtaining that which is with Thee. Thou art, in truth, the Ever-Forgiving, the All-Bountiful.</p>
-`
-
+`,
       author: "Bahá’u’lláh"
     }
   ],
@@ -58,6 +57,7 @@ const BAHAI_PRAYERS = {
     }
   ]
 };
+
 
 
 const get = (k, fallback) => {
@@ -610,6 +610,7 @@ function renderBahaiPrayerOfTheDay() {
     </div>
   `;
 }
+
 
 
 
