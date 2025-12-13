@@ -588,13 +588,9 @@ function renderBahaiPrayerOfTheDay() {
 
   if (type === "short") {
     prayer = BAHAI_PRAYERS.short[0];
-  }
-
-  if (type === "medium") {
+  } else if (type === "medium") {
     prayer = BAHAI_PRAYERS.medium[0];
-  }
-
-  if (type === "long") {
+  } else if (type === "long") {
     prayer = BAHAI_PRAYERS.long[0];
   }
 
