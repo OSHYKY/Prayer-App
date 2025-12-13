@@ -10,7 +10,10 @@ const STORAGE_KEYS = {
 };
 
 const BAHAI_PRAYERS = {
-  short: "O my God! O my God! Unite the hearts of Thy servants...",
+  short: ["I bear witness, O my God, that Thou hast created me to know Thee and to worship Thee."
+  "I testift, at this to my powerlessness and to Thy might, to my poverty and to Thy wealth."
+  "There is none other God but Thee, the Help in Peril, the Self-Subsisting."
+  "Bahá'u'lláh"], 
   medium: [
     "Medium Prayer – Part 1...",
     "Medium Prayer – Part 2...",
@@ -557,4 +560,5 @@ function renderBahaiPrayerOfTheDay() {
     container.textContent = BAHAI_PRAYERS.long;
   }
 }
+
 
