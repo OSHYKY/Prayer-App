@@ -174,18 +174,29 @@ function renderStreak() {
 
 function renderCalendar() {
   calendarEl.innerHTML = "";
+
   const now = new Date();
-  const start = new Date(now); start.setDate(now.getDate() - 13);
-  for (let i=0; i<14; i++) {
-    const d = new Date(start); d.setDate(start.getDate() + i);
-    const key = d.toISOString().slice(0,10);
+
+  // We want the streak to fill left → right,
+  // so we generate days from oldest → newest.
+  const start = new Date(now);
+  start.setDate(now.getDate() - 13); // 14-day window
+
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+
+    const key = d.toISOString().slice(0, 10);
     const status = calendarData[key] || "miss";
+
     const dot = document.createElement("div");
     dot.className = `day ${status}`;
     dot.title = `${key}: ${status}`;
+
     calendarEl.appendChild(dot);
   }
 }
+
 
 // ===== Show prayer within ±1 hour =====
 function showUpcomingPrayer() {
@@ -608,6 +619,7 @@ function renderBahaiPrayerOfTheDay() {
     </div>
   `;
 }
+
 
 
 
