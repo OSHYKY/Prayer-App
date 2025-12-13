@@ -218,3 +218,61 @@ select {
   .two-col { display: flex; gap: 1rem; }
 }
 
+/* Streak bar container */
+#calendar {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* Base dot */
+.day {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+/* Status colors */
+.day.done {
+  background: #4caf50;
+  box-shadow: 0 0 8px #4caf50;
+}
+
+.day.skip {
+  background: #ffeb3b;
+  box-shadow: 0 0 6px #ffeb3b;
+}
+
+.day.miss {
+  background: #f44336;
+  box-shadow: 0 0 6px #f44336;
+}
+
+/* Glow pulse when marking done */
+.day.done.pulse {
+  animation: pulseGlow 0.6s ease-out;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); box-shadow: 0 0 0px #4caf50; }
+  50% { transform: scale(1.3); box-shadow: 0 0 16px #4caf50; }
+  100% { transform: scale(1); box-shadow: 0 0 8px #4caf50; }
+}
+
+/* Fade-in animation for dots */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Percentage label */
+#streakPercent {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
