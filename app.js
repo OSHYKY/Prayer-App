@@ -310,6 +310,8 @@ async function scheduleBahaiFast(config) {
   if (!coords) {
     bahaiTodayDiv.textContent = "Location required for sunrise/sunset scheduling.";
     return;
+	    updateFastCountdown();
+
   }
   const start = new Date(config.startDate);
   for (let i = 0; i < config.days; i++) {
@@ -786,17 +788,19 @@ function renderBahaiPrayerOfTheDay() {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+document.getElementById("enable-orientation").addEventListener("click", async () => {
+  if (typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function") {
+    
+    // iOS
+    const permission = await DeviceOrientationEvent.requestPermission();
+    if (permission === "granted") {
+      window.addEventListener("deviceorientation", handleOrientation);
+    }
+  } else {
+    // Android / Desktop
+    window.addEventListener("deviceorientationabsolute", handleOrientation);
+    window.addEventListener("deviceorientation", handleOrientation);
+  }
+});
 
