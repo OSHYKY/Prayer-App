@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Islamic Prayer & Fasting Tools</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h1>🕌 Islamic Prayer & Fasting Tools</h1>
+
+  <a href="index.html" style="color:#4da3ff;">← Back to Bahá’í Tools</a>
+
+  <hr>
+
+  <!-- DAILY PRAYER TIMES -->
+  <section>
+    <h2>🕋 Daily Prayer Schedule</h2>
+    <button onclick="enableLocationForPrayerTimes()">Enable Location for Prayer Times</button>
+
+    <div id="prayer-times">
+      <p>Fajr: --:--</p>
+      <p>Dhuhr: --:--</p>
+      <p>Asr: --:--</p>
+      <p>Maghrib: --:--</p>
+      <p>Isha: --:--</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- QIBLA COMPASS -->
+  <section>
+    <h2>🧭 Qibla Direction</h2>
+    <p>Enable location and compass to show the direction of the Kaaba.</p>
+
+    <div id="qibla-compass" style="position: relative; width: 200px; height: 200px;">
+      <img src="compass-bg.png" id="compass-bg" style="width: 100%; height: 100%;">
+      <img src="needle.png" id="qibla-needle" 
+           style="position: absolute; top: 50%; left: 50%; width: 30px; height: 30px;
+                  transform: translate(-50%, -50%) rotate(0deg); transform-origin: 50% 90%;">
+    </div>
+
+    <button onclick="enableQiblaCompass()">Enable Compass</button>
+  </section>
+
+  <hr>
+
+  <!-- PRAYER REMINDERS -->
+  <section>
+    <h2>📣 Prayer Reminders</h2>
+
+    <label><input type="checkbox" id="rem-fajr"> Fajr Reminder</label><br>
+    <label><input type="checkbox" id="rem-dhuhr"> Dhuhr Reminder</label><br>
+    <label><input type="checkbox" id="rem-asr"> Asr Reminder</label><br>
+    <label><input type="checkbox" id="rem-maghrib"> Maghrib Reminder</label><br>
+    <label><input type="checkbox" id="rem-isha"> Isha Reminder</label><br>
+  </section>
+
+  <hr>
+
+  <!-- FASTING -->
+  <section>
+    <h2>🌙 Fasting Schedule</h2>
+
+    <label>Fast Type:</label>
+    <select id="fast-type">
+      <option value="ramadan">Ramadan</option>
+      <option value="sunnah">Sunnah (Mon/Thu)</option>
+      <option value="white-days">White Days (13th–15th)</option>
+    </select>
+
+    <br><br>
+
+    <label>Anchor:</label>
+    <select id="fast-anchor">
+      <option value="sunrise">Sunrise</option>
+      <option value="maghrib">Maghrib</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="startIslamicFastSchedule()">Start Fast Schedule</button>
+
+    <div id="fast-status" style="margin-top:10px;">Fast inactive</div>
+  </section>
+
+  <hr>
+
+  <!-- DAILY QURAN & DUA -->
+  <section>
+    <h2>📿 Daily Quran & Dua</h2>
+
+    <select id="daily-devotion-type">
+      <option value="quran">Quran Verse</option>
+      <option value="morning">Morning Adhkar</option>
+      <option value="evening">Evening Adhkar</option>
+      <option value="dua">Custom Dua</option>
+    </select>
+
+    <div id="devotion-display" style="margin-top:10px;">
+      << INSERT DAILY VERSE OR DUA HERE >>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- LEGAL -->
+  <section>
+    <h2>⚙️ Privacy & Notes</h2>
+    <p>• Location is used only for prayer times and Qibla direction.</p>
+    <p>• No data is stored or shared.</p>
+    <p>• Astronomical calculations use publicly available formulas.</p>
+    <p>• This is a personal devotional tool, not affiliated with any official Islamic institution.</p>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
 
